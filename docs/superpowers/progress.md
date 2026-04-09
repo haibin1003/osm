@@ -25,6 +25,8 @@
 | 2025-04-09 | 需求brainstorming讨论 | ✅ 完成 |
 | 2025-04-09 | PRD v1.0 文档编写 | ✅ 完成 |
 | 2025-04-09 | PRD提交到仓库 | ✅ 完成 |
+| 2025-04-09 | 开发规范制定 | ✅ 完成 |
+| 2025-04-09 | 规范文档提交 | ✅ 完成 |
 
 ### PRD v1.0 核心内容确认
 
@@ -112,8 +114,15 @@
 
 | 文档 | 路径 | 说明 |
 |------|------|------|
-| PRD v1.0 | `docs/superpowers/specs/2025-04-09-osm-design.md` | 完整需求文档 |
-| 进展记录 | `docs/superpowers/progress.md` | 本文档 |
+| **核心约束** | `CLAUDE.md` | 绝对禁止和强制要求 |
+| **PRD v1.0** | `docs/superpowers/specs/2025-04-09-osm-design.md` | 完整需求文档 |
+| **进展记录** | `docs/superpowers/progress.md` | 本文档 |
+| **开发流程** | `docs/standards/workflow.md` | 分支策略、PR流程 |
+| **后端规范** | `docs/standards/backend.md` | Java/Spring Boot编码规范 |
+| **前端规范** | `docs/standards/frontend.md` | React/TypeScript编码规范 |
+| **测试规范** | `docs/standards/testing.md` | 单元/集成/E2E测试规范 |
+| **文档规范** | `docs/standards/documentation.md` | API/技术文档规范 |
+| **数据库规范** | `docs/standards/database.md` | MySQL设计规范 |
 
 ---
 
