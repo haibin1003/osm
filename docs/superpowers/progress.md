@@ -14,86 +14,104 @@
 
 ## 当前阶段
 
-**阶段**: Phase 2 - System Management 模块开发（进行中）
-
-### 已完成工作
-
-| 日期 | 工作内容 | 状态 |
-|------|----------|------|
-| 2025-04-09 | 项目初始化，Git仓库配置 | ✅ 完成 |
-| 2025-04-09 | Superpowers插件安装 | ✅ 完成 |
-| 2025-04-09 | 需求brainstorming讨论 | ✅ 完成 |
-| 2025-04-09 | PRD v1.0 文档编写 | ✅ 完成 |
-| 2025-04-09 | PRD提交到仓库 | ✅ 完成 |
-| 2025-04-09 | 开发规范制定 | ✅ 完成 |
-| 2025-04-09 | 规范文档提交 | ✅ 完成 |
-| 2025-04-09 | UI设计规范 | ✅ 完成 |
-| 2026-04-10 | Phase 1: 基础框架（Common模块、Result、Exception、BaseEntity） | ✅ 完成 |
-| 2026-04-10 | Phase 2: Domain CRUD模块（Entity、Mapper、Service、Controller、Test） | ✅ 完成 |
-| 2026-04-10 | Phase 2: System CRUD模块（Entity、Mapper、Service、Controller、Test） | ✅ 完成 |
-| 2026-04-10 | Phase 2: Application CRUD模块（Entity、Mapper、Service、Controller、Test） | ✅ 完成 |
+**阶段**: Phase 3 - Software Library 模块（待启动）
 
 ### 分支状态
 
 | 分支 | 状态 | 说明 |
 |------|------|------|
-| `main` | 稳定 | 生产分支 |
-| `feature/foundation` | 已合并到main | 基础框架（Common模块） |
-| `feature/system-management` | 开发中 | 系统管理模块（Domain/System/Application） |
+| `main` | ✅ 稳定 | 已合并 Phase 1 + Phase 2 |
+| `feature/foundation` | ✅ 已合并 | 基础框架（Common模块） |
+| `feature/system-management` | ✅ 已合并 | 系统管理模块（Domain/System/Application） |
 
-### 已实现功能
+### 已完成模块
 
-#### Domain 模块 (`/api/domains`)
-- `POST /api/domains` - 创建域
-- `PUT /api/domains/{id}` - 更新域
-- `GET /api/domains/{id}` - 获取域详情
-- `GET /api/domains` - 获取所有域
-- `DELETE /api/domains/{id}` - 删除域
+#### Phase 1 ✅ - 基础框架
+- [x] Common模块（Result、GlobalExceptionHandler、BusinessException）
+- [x] BaseEntity实体基类
+- [x] Flyway数据库迁移脚本（V1__init_schema.sql）
+- [x] MyBatis-Plus配置
 
-#### System 模块 (`/api/systems`)
-- `POST /api/systems` - 创建系统
-- `PUT /api/systems/{id}` - 更新系统
-- `GET /api/systems/{id}` - 获取系统详情
-- `GET /api/systems` - 获取所有系统
-- `GET /api/systems/domain/{domainId}` - 按域获取系统列表
-- `DELETE /api/systems/{id}` - 删除系统
-
-#### Application 模块 (`/api/applications`)
-- `POST /api/applications` - 创建应用
-- `PUT /api/applications/{id}` - 更新应用
-- `GET /api/applications/{id}` - 获取应用详情
-- `GET /api/applications` - 获取所有应用
-- `GET /api/applications/system/{systemId}` - 按系统获取应用列表
-- `DELETE /api/applications/{id}` - 删除应用
+#### Phase 2 ✅ - System Management (2026-04-10 合并)
+- [x] Domain CRUD 模块 (`/api/domains`)
+- [x] System CRUD 模块 (`/api/systems`)
+- [x] Application CRUD 模块 (`/api/applications`)
+- [x] 单元测试（DomainServiceTest, SystemServiceTest, ApplicationServiceTest）
 
 ---
 
 ## 开发计划
 
-### Phase 1 ✅ (已完成)
-- [x] Common模块（Result、GlobalExceptionHandler）
-- [x] BaseEntity实体基类
-- [x] Flyway数据库迁移脚本
-- [x] MyBatis-Plus配置
+### Phase 3 🔲 (待启动) - Software Library 模块
 
-### Phase 2 🔄 (进行中: System Management)
-- [x] Domain CRUD
-- [x] System CRUD
-- [x] Application CRUD
-- [ ] 前端页面开发（待启动）
+**功能需求**:
+- 软件信息管理（名称、描述、官网、SoureForge/GitHub链接）
+- 软件双维度分类（技术类型 + 许可证类型）
+- 版本管理（版本号、发布时间、下载地址、Release Notes）
+- 依赖关系管理（可选，Phase 2）
 
-### Phase 3 (待启动)
-- [ ] Software Library模块（软件管理）
-- [ ] Software Version模块（版本管理）
+**API endpoints**:
+```
+POST   /api/software
+PUT    /api/software/{id}
+GET    /api/software/{id}
+GET    /api/software
+DELETE /api/software/{id}
 
-### Phase 4 (待启动)
-- [ ] Usage Management模块（使用登记）
+POST   /api/software-versions
+PUT    /api/software-versions/{id}
+GET    /api/software-versions/{id}
+GET    /api/software-versions/software/{softwareId}
+DELETE /api/software-versions/{id}
 
-### Phase 5 (待启动)
-- [ ] Order Workflow模块（订购审批）
+GET    /api/software/by-tech-type/{techType}
+GET    /api/software/by-license/{licenseType}
+```
 
-### Phase 6 (待启动)
-- [ ] Statistics模块（数据统计可视化）
+**文件结构**:
+```
+src/main/java/com/osm/domain/software/
+├── entity/
+│   ├── Software.java
+│   └── SoftwareVersion.java
+├── mapper/
+│   ├── SoftwareMapper.java
+│   └── SoftwareVersionMapper.java
+├── dto/
+│   ├── CreateSoftwareRequest.java
+│   ├── UpdateSoftwareRequest.java
+│   ├── CreateSoftwareVersionRequest.java
+│   └── UpdateSoftwareVersionRequest.java
+├── vo/
+│   ├── SoftwareVO.java
+│   └── SoftwareVersionVO.java
+├── service/
+│   ├── SoftwareService.java
+│   └── impl/SoftwareServiceImpl.java
+└── controller/
+    └── SoftwareController.java
+```
+
+### Phase 4 🔲 (待启动) - Usage Management 模块
+
+**功能需求**:
+- 使用登记（存量补录 + 新申请）
+- 使用记录查询
+- 关联 System 和 Application
+
+### Phase 5 🔲 (待启动) - Order Workflow 模块
+
+**功能需求**:
+- 订购申请（草稿 → 提交 → 审批中 → 通过/驳回）
+- 审批流程
+- 订单历史
+
+### Phase 6 🔲 (待启动) - Statistics 模块
+
+**功能需求**:
+- 统计面板（ECharts）
+- 三级关联图谱
+- 数据导出
 
 ---
 
@@ -131,15 +149,24 @@
 
 | 序号 | 任务 | 依赖 |
 |------|------|------|
-| 1 | 前端页面开发（Domain/System/Application） | Phase 2后端完成 |
-| 2 | 联调测试 | 前端页面完成 |
+| 1 | Phase 3: Software Library 模块开发 | 无 |
+| 2 | 前端页面开发（Domain/System/Application） | Phase 2后端完成 |
 
-### 即将开始
+### 中期
 
 | 序号 | 任务 | 依赖 |
 |------|------|------|
-| 1 | Software Library模块 | Phase 2完成 |
-| 2 | Software Version模块 | Phase 2完成 |
+| 1 | Phase 4: Usage Management | Phase 3完成 |
+| 2 | Phase 5: Order Workflow | Phase 4完成 |
+| 3 | 前端页面开发（Software/Usage/Order） | 后端对应模块完成 |
+
+### 长期
+
+| 序号 | 任务 | 依赖 |
+|------|------|------|
+| 1 | Phase 6: Statistics | Phase 5完成 |
+| 2 | 前后端联调测试 | Phase 6完成 |
+| 3 | E2E测试（playwright-cli） | 所有模块完成 |
 
 ---
 
@@ -176,6 +203,13 @@
 
 ## 下一步行动
 
-**继续Phase 2**: 启动前端页面开发，与后端API联调
+**立即开始**: Phase 3 - Software Library 模块开发
+
+**步骤**:
+1. 创建 `feature/software-library` 分支
+2. 编写 Software 实体和 CRUD
+3. 编写 SoftwareVersion 实体和 CRUD
+4. 编写单元测试
+5. CodeReview + 合并到main
 
 **阻塞项**: 无
