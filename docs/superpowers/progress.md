@@ -1,20 +1,20 @@
 # OSM 项目进展记录
 
-> 最后更新: 2025-04-09
+> 最后更新: 2026-04-10
 
 ---
 
 ## 项目概况
 
-**项目名称**: OSM (Open Source Management) - 开源软件治理平台  
-**项目地址**: https://github.com/haibin1003/osm  
+**项目名称**: OSM (Open Source Management) - 开源软件治理平台
+**项目地址**: https://github.com/haibin1003/osm
 **开发模式**: Superpowers 结构化开发
 
 ---
 
 ## 当前阶段
 
-**阶段**: Phase 1 - MVP 开发（设计已完成）
+**阶段**: Phase 2 - System Management 模块开发（进行中）
 
 ### 已完成工作
 
@@ -28,53 +28,118 @@
 | 2025-04-09 | 开发规范制定 | ✅ 完成 |
 | 2025-04-09 | 规范文档提交 | ✅ 完成 |
 | 2025-04-09 | UI设计规范 | ✅ 完成 |
+| 2026-04-10 | Phase 1: 基础框架（Common模块、Result、Exception、BaseEntity） | ✅ 完成 |
+| 2026-04-10 | Phase 2: Domain CRUD模块（Entity、Mapper、Service、Controller、Test） | ✅ 完成 |
+| 2026-04-10 | Phase 2: System CRUD模块（Entity、Mapper、Service、Controller、Test） | ✅ 完成 |
+| 2026-04-10 | Phase 2: Application CRUD模块（Entity、Mapper、Service、Controller、Test） | ✅ 完成 |
 
-### PRD v1.0 核心内容确认
+### 分支状态
 
-**角色**: 开发人员 + 管理人员
+| 分支 | 状态 | 说明 |
+|------|------|------|
+| `main` | 稳定 | 生产分支 |
+| `feature/foundation` | 已合并到main | 基础框架（Common模块） |
+| `feature/system-management` | 开发中 | 系统管理模块（Domain/System/Application） |
 
-**核心模块**:
-1. ✅ 系统架构管理（域/系统/应用 三级结构）
-2. ✅ 开源软件库（技术类型+许可证 双维度分类）
-3. ✅ 订购与审批（草稿→提交→审批中→通过/驳回）
-4. ✅ 使用登记（存量补录+审批自动记录）
-5. ✅ 数据统计与可视化（三级关联图谱）
+### 已实现功能
 
-**技术栈**:
-- 后端: Java 17 + Spring Boot 3.x
-- 前端: React 18 + Ant Design 5.x
-- 数据库: MySQL 8.0
-- 部署: Docker/K8s
+#### Domain 模块 (`/api/domains`)
+- `POST /api/domains` - 创建域
+- `PUT /api/domains/{id}` - 更新域
+- `GET /api/domains/{id}` - 获取域详情
+- `GET /api/domains` - 获取所有域
+- `DELETE /api/domains/{id}` - 删除域
+
+#### System 模块 (`/api/systems`)
+- `POST /api/systems` - 创建系统
+- `PUT /api/systems/{id}` - 更新系统
+- `GET /api/systems/{id}` - 获取系统详情
+- `GET /api/systems` - 获取所有系统
+- `GET /api/systems/domain/{domainId}` - 按域获取系统列表
+- `DELETE /api/systems/{id}` - 删除系统
+
+#### Application 模块 (`/api/applications`)
+- `POST /api/applications` - 创建应用
+- `PUT /api/applications/{id}` - 更新应用
+- `GET /api/applications/{id}` - 获取应用详情
+- `GET /api/applications` - 获取所有应用
+- `GET /api/applications/system/{systemId}` - 按系统获取应用列表
+- `DELETE /api/applications/{id}` - 删除应用
+
+---
+
+## 开发计划
+
+### Phase 1 ✅ (已完成)
+- [x] Common模块（Result、GlobalExceptionHandler）
+- [x] BaseEntity实体基类
+- [x] Flyway数据库迁移脚本
+- [x] MyBatis-Plus配置
+
+### Phase 2 🔄 (进行中: System Management)
+- [x] Domain CRUD
+- [x] System CRUD
+- [x] Application CRUD
+- [ ] 前端页面开发（待启动）
+
+### Phase 3 (待启动)
+- [ ] Software Library模块（软件管理）
+- [ ] Software Version模块（版本管理）
+
+### Phase 4 (待启动)
+- [ ] Usage Management模块（使用登记）
+
+### Phase 5 (待启动)
+- [ ] Order Workflow模块（订购审批）
+
+### Phase 6 (待启动)
+- [ ] Statistics模块（数据统计可视化）
+
+---
+
+## 技术栈
+
+| 层级 | 技术 | 版本 |
+|------|------|------|
+| 后端框架 | Spring Boot | 3.2.x |
+| 语言 | Java | 17 |
+| ORM | MyBatis-Plus | 3.5.5 |
+| 数据库迁移 | Flyway | - |
+| 数据库 | MySQL | 8.0 |
+| 前端框架 | React | 18 |
+| UI库 | Ant Design | 5.x |
+| 构建工具 | Vite | - |
+| API文档 | Knife4j/SpringDoc | - |
+
+---
+
+## 数据库配置
+
+| 配置项 | 值 |
+|--------|-----|
+| Host | 114.66.38.81 |
+| Port | 3036 |
+| Database | osm |
+| User | root |
+| Password | root123 |
 
 ---
 
 ## 待办事项
 
+### 紧急
+
+| 序号 | 任务 | 依赖 |
+|------|------|------|
+| 1 | 前端页面开发（Domain/System/Application） | Phase 2后端完成 |
+| 2 | 联调测试 | 前端页面完成 |
+
 ### 即将开始
 
-| 序号 | 任务 | 预计时间 | 依赖 |
-|------|------|----------|------|
-| 1 | 项目脚手架搭建 | 1天 | 无 |
-| 2 | 数据库设计实现 | 1天 | 无 |
-| 3 | 基础CRUD接口开发 | 2天 | 数据库 |
-
-### Phase 1 完整计划
-
-**Week 1-2: 基础架构**
-- [ ] 项目脚手架搭建
-- [ ] 数据库设计实现
-- [ ] 基础CRUD接口
-- [ ] 用户认证模块
-
-**Week 3-4: 核心业务**
-- [ ] 系统架构管理（域/系统/应用）
-- [ ] 开源软件库管理
-- [ ] 使用登记功能
-
-**Week 5-6: 流程与可视化**
-- [ ] 订购申请与审批流程
-- [ ] 管理人员统计面板
-- [ ] 三级关联图谱
+| 序号 | 任务 | 依赖 |
+|------|------|------|
+| 1 | Software Library模块 | Phase 2完成 |
+| 2 | Software Version模块 | Phase 2完成 |
 
 ---
 
@@ -93,47 +158,24 @@
 
 ---
 
-## 会议记录
-
-### 2025-04-09 需求讨论
-
-**参与者**: haibin1003
-
-**讨论内容**:
-1. 确认平台定位：企业开源软件治理，不是GitHub探索平台
-2. 角色划分：开发人员（查看、订购、登记）+ 管理人员（录入、审批、统计）
-3. 核心流程：订购审批 vs 使用登记的关系，存量补录策略
-4. 数据结构：域/系统/应用 三级，软件双维度分类
-5. 可视化需求：管理人员需要高大上的面板和三级关联图谱
-6. 技术选型：Java后端，React前端，MySQL数据库
-
-**待确认事项**: 无，设计文档已确认
-
----
-
 ## 相关文档
 
-| 文档 | 路径 | 说明 |
-|------|------|------|
-| **核心约束** | `CLAUDE.md` | 绝对禁止和强制要求 |
-| **PRD v1.0** | `docs/superpowers/specs/2025-04-09-osm-design.md` | 完整需求文档 |
-| **进展记录** | `docs/superpowers/progress.md` | 本文档 |
-| **开发流程** | `docs/standards/workflow.md` | 分支策略、PR流程 |
-| **后端规范** | `docs/standards/backend.md` | Java/Spring Boot编码规范 |
-| **前端规范** | `docs/standards/frontend.md` | React/TypeScript编码规范 |
-| **测试规范** | `docs/standards/testing.md` | 单元/集成/E2E测试规范 |
-| **文档规范** | `docs/standards/documentation.md` | API/技术文档规范 |
-| **数据库规范** | `docs/standards/database.md` | MySQL设计规范 |
-| **UI设计规范** | `docs/design/ui-design-system.md` | 色彩、布局、组件、交互设计 |
+| 文档 | 路径 |
+|------|------|
+| **核心约束** | `CLAUDE.md` |
+| **PRD v1.0** | `docs/superpowers/specs/2025-04-09-osm-design.md` |
+| **进展记录** | `docs/superpowers/progress.md` |
+| **开发流程** | `docs/standards/workflow.md` |
+| **后端规范** | `docs/standards/backend.md` |
+| **前端规范** | `docs/standards/frontend.md` |
+| **测试规范** | `docs/standards/testing.md` |
+| **数据库规范** | `docs/standards/database.md` |
+| **UI设计规范** | `docs/design/ui-design-system.md` |
 
 ---
 
 ## 下一步行动
 
-**准备开始**: 项目脚手架搭建
-
-**需要的资源**:
-- 开发环境配置确认
-- 数据库连接信息
+**继续Phase 2**: 启动前端页面开发，与后端API联调
 
 **阻塞项**: 无
