@@ -27,6 +27,7 @@
 | 2025-04-09 | PRD提交到仓库 | ✅ 完成 |
 | 2025-04-09 | 开发规范制定 | ✅ 完成 |
 | 2025-04-09 | 规范文档提交 | ✅ 完成 |
+| 2025-04-09 | UI设计规范 | ✅ 完成 |
 
 ### PRD v1.0 核心内容确认
 
@@ -123,6 +124,7 @@
 | **测试规范** | `docs/standards/testing.md` | 单元/集成/E2E测试规范 |
 | **文档规范** | `docs/standards/documentation.md` | API/技术文档规范 |
 | **数据库规范** | `docs/standards/database.md` | MySQL设计规范 |
+| **UI设计规范** | `docs/design/ui-design-system.md` | 色彩、布局、组件、交互设计 |
 
 ---
 
