@@ -9,7 +9,7 @@ spring:
     password: ${DB_PASSWORD:root123}
     driver-class-name: com.mysql.cj.jdbc.Driver
   flyway:
-    enabled: false
+    enabled: true
 
 mybatis-plus:
   configuration:

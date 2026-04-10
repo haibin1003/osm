@@ -28,6 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+        log.info("JwtFilter processing: {} {}", request.getMethod(), request.getRequestURI());
         try {
             String jwt = getJwtFromRequest(request);
 
