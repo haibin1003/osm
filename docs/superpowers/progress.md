@@ -14,17 +14,31 @@
 
 ## 当前阶段
 
-**阶段**: Phase 3 - Software Library 模块（待启动）
+**阶段**: Phase 0+2 前端开发 + 联调（进行中）
 
 ### 分支状态
 
 | 分支 | 状态 | 说明 |
 |------|------|------|
-| `main` | ✅ 稳定 | 已合并 Phase 1 + Phase 2 |
+| `main` | ✅ 稳定 | 已合并 Phase 0, 1, 2 |
+| `feature/phase0-2-frontend-complete` | 🔄 开发中 | Phase 0+2 前端开发+联调 |
 | `feature/foundation` | ✅ 已合并 | 基础框架（Common模块） |
 | `feature/system-management` | ✅ 已合并 | 系统管理模块（Domain/System/Application） |
+| `feature/user-auth` | ✅ 已合并 | 用户权限模块 |
 
 ### 已完成模块
+
+#### Phase 0 ✅ - 用户权限认证
+- [x] User/Role/Permission 实体 + Mapper
+- [x] JWT Token 认证
+- [x] Spring Security 配置
+- [x] AuthController/UserController/RoleController
+- [x] 单元测试
+- [x] 数据库迁移脚本 V2__user_auth_schema.sql
+- [ ] 前端登录页面 ✅ (已完成)
+- [ ] 前端用户管理页面 ✅ (已完成)
+- [ ] 前端角色管理页面 ✅ (已完成)
+- [ ] 前后端联调 ❌ (待数据库可用)
 
 #### Phase 1 ✅ - 基础框架
 - [x] Common模块（Result、GlobalExceptionHandler、BusinessException）
@@ -32,11 +46,38 @@
 - [x] Flyway数据库迁移脚本（V1__init_schema.sql）
 - [x] MyBatis-Plus配置
 
-#### Phase 2 ✅ - System Management (2026-04-10 合并)
+#### Phase 2 ✅ - System Management
 - [x] Domain CRUD 模块 (`/api/domains`)
 - [x] System CRUD 模块 (`/api/systems`)
 - [x] Application CRUD 模块 (`/api/applications`)
-- [x] 单元测试（DomainServiceTest, SystemServiceTest, ApplicationServiceTest）
+- [x] 单元测试
+- [x] 前端域管理页面 ✅ (已完成)
+- [x] 前端系统管理页面 ✅ (已完成)
+- [x] 前端应用管理页面 ✅ (已完成)
+- [ ] 前后端联调 ❌ (待数据库可用)
+
+---
+
+## 当前阻塞问题
+
+| 问题 | 原因 | 解决方案 |
+|------|------|----------|
+| 后端无法启动 | 数据库 114.66.38.81:3306 连接被拒绝 | 请确认数据库可达性 |
+| Spring Boot 3.2 不兼容 | MyBatis-Plus 3.5.5 FactoryBean 问题 | 已降级到 Spring Boot 3.1.5 |
+
+---
+
+## 前端已实现页面
+
+| 页面 | 路径 | 状态 |
+|------|------|------|
+| 登录页 | `/login` | ✅ 完成 |
+| 首页仪表盘 | `/` | ✅ 完成 |
+| 用户管理 | `/system/users` | ✅ 完成 |
+| 角色管理 | `/system/roles` | ✅ 完成 |
+| 域管理 | `/system/domains` | ✅ 完成 |
+| 系统管理 | `/system/systems` | ✅ 完成 |
+| 应用管理 | `/system/applications` | ✅ 完成 |
 
 ---
 
@@ -45,52 +86,9 @@
 ### Phase 3 🔲 (待启动) - Software Library 模块
 
 **功能需求**:
-- 软件信息管理（名称、描述、官网、SoureForge/GitHub链接）
+- 软件信息管理（名称、描述、官网、GitHub链接）
 - 软件双维度分类（技术类型 + 许可证类型）
 - 版本管理（版本号、发布时间、下载地址、Release Notes）
-- 依赖关系管理（可选，Phase 2）
-
-**API endpoints**:
-```
-POST   /api/software
-PUT    /api/software/{id}
-GET    /api/software/{id}
-GET    /api/software
-DELETE /api/software/{id}
-
-POST   /api/software-versions
-PUT    /api/software-versions/{id}
-GET    /api/software-versions/{id}
-GET    /api/software-versions/software/{softwareId}
-DELETE /api/software-versions/{id}
-
-GET    /api/software/by-tech-type/{techType}
-GET    /api/software/by-license/{licenseType}
-```
-
-**文件结构**:
-```
-src/main/java/com/osm/domain/software/
-├── entity/
-│   ├── Software.java
-│   └── SoftwareVersion.java
-├── mapper/
-│   ├── SoftwareMapper.java
-│   └── SoftwareVersionMapper.java
-├── dto/
-│   ├── CreateSoftwareRequest.java
-│   ├── UpdateSoftwareRequest.java
-│   ├── CreateSoftwareVersionRequest.java
-│   └── UpdateSoftwareVersionRequest.java
-├── vo/
-│   ├── SoftwareVO.java
-│   └── SoftwareVersionVO.java
-├── service/
-│   ├── SoftwareService.java
-│   └── impl/SoftwareServiceImpl.java
-└── controller/
-    └── SoftwareController.java
-```
 
 ### Phase 4 🔲 (待启动) - Usage Management 模块
 
@@ -119,15 +117,15 @@ src/main/java/com/osm/domain/software/
 
 | 层级 | 技术 | 版本 |
 |------|------|------|
-| 后端框架 | Spring Boot | 3.2.x |
+| 后端框架 | Spring Boot | 3.1.5 (降级以兼容MyBatis-Plus) |
 | 语言 | Java | 17 |
 | ORM | MyBatis-Plus | 3.5.5 |
-| 数据库迁移 | Flyway | - |
+| 数据库迁移 | Flyway | 已禁用 |
 | 数据库 | MySQL | 8.0 |
 | 前端框架 | React | 18 |
 | UI库 | Ant Design | 5.x |
-| 构建工具 | Vite | - |
-| API文档 | Knife4j/SpringDoc | - |
+| 构建工具 | Vite | 5.x |
+| API文档 | Knife4j/SpringDoc | 4.3.0 |
 
 ---
 
@@ -136,7 +134,7 @@ src/main/java/com/osm/domain/software/
 | 配置项 | 值 |
 |--------|-----|
 | Host | 114.66.38.81 |
-| Port | 3036 |
+| Port | 3306 |
 | Database | osm |
 | User | root |
 | Password | root123 |
@@ -147,26 +145,19 @@ src/main/java/com/osm/domain/software/
 
 ### 紧急
 
-| 序号 | 任务 | 依赖 |
-|------|------|------|
-| 1 | Phase 3: Software Library 模块开发 | 无 |
-| 2 | 前端页面开发（Domain/System/Application） | Phase 2后端完成 |
+| 序号 | 任务 | 依赖 | 状态 |
+|------|------|------|------|
+| 1 | 解决数据库连接问题 | 确认数据库可达 | ❌ 阻塞 |
+| 2 | 前后端联调测试 | 数据库可用 | ⏳ 待做 |
+| 3 | Playwright E2E 测试 | 联调完成 | ⏳ 待做 |
 
 ### 中期
 
 | 序号 | 任务 | 依赖 |
 |------|------|------|
-| 1 | Phase 4: Usage Management | Phase 3完成 |
-| 2 | Phase 5: Order Workflow | Phase 4完成 |
-| 3 | 前端页面开发（Software/Usage/Order） | 后端对应模块完成 |
-
-### 长期
-
-| 序号 | 任务 | 依赖 |
-|------|------|------|
-| 1 | Phase 6: Statistics | Phase 5完成 |
-| 2 | 前后端联调测试 | Phase 6完成 |
-| 3 | E2E测试（playwright-cli） | 所有模块完成 |
+| 1 | Phase 3: Software Library 模块 | Phase 0,2 联调完成 |
+| 2 | Phase 4: Usage Management | Phase 3 完成 |
+| 3 | Phase 5: Order Workflow | Phase 4 完成 |
 
 ---
 
@@ -179,9 +170,9 @@ src/main/java/com/osm/domain/software/
 | 2025-04-09 | 软件分类 | 技术类型+许可证 双维度 | 管理需要 |
 | 2025-04-09 | 使用登记开关 | 初期开放，后期强制 | 存量数据补录 |
 | 2025-04-09 | 订购审批 | 多状态流程 | 业务需要 |
-| 2025-04-09 | 存储功能 | 放到Phase 2 | 降低MVP复杂度 |
 | 2025-04-09 | 技术栈 | Java+React+MySQL | 企业主流，团队熟悉 |
-| 2025-04-09 | 企业对接 | 放到Phase 2 | 先跑通核心流程 |
+| 2026-04-10 | Spring Boot版本 | 降级到3.1.5 | MyBatis-Plus兼容性 |
+| 2026-04-10 | 数据库端口 | 改为3306 | 用户指定 |
 
 ---
 
@@ -193,6 +184,7 @@ src/main/java/com/osm/domain/software/
 | **PRD v1.0** | `docs/superpowers/specs/2025-04-09-osm-design.md` |
 | **进展记录** | `docs/superpowers/progress.md` |
 | **开发流程** | `docs/standards/workflow.md` |
+| **功能完整性规范** | `docs/standards/completeness-checklist.md` |
 | **后端规范** | `docs/standards/backend.md` |
 | **前端规范** | `docs/standards/frontend.md` |
 | **测试规范** | `docs/standards/testing.md` |
@@ -203,13 +195,14 @@ src/main/java/com/osm/domain/software/
 
 ## 下一步行动
 
-**立即开始**: Phase 3 - Software Library 模块开发
+**立即**: 确认数据库 114.66.38.81:3306 可达
 
 **步骤**:
-1. 创建 `feature/software-library` 分支
-2. 编写 Software 实体和 CRUD
-3. 编写 SoftwareVersion 实体和 CRUD
-4. 编写单元测试
-5. CodeReview + 合并到main
+1. 确认远程数据库连接
+2. 启用 Flyway 迁移
+3. 启动后端服务
+4. 前后端联调测试
+5. Playwright E2E 测试
+6. 合并到 main
 
-**阻塞项**: 无
+**阻塞项**: 数据库连接问题

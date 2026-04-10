@@ -1,12 +1,41 @@
-import { Button } from 'antd'
+import React from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useAuth } from '@/context/AuthContext'
+import MainLayout from '@/components/Layout/MainLayout'
+import LoginPage from '@/pages/Auth/LoginPage'
+import DashboardPage from '@/pages/DashboardPage'
+import UserManagePage from '@/pages/System/UserManagePage'
+import RoleManagePage from '@/pages/System/RoleManagePage'
+import DomainManagePage from '@/pages/System/DomainManagePage'
+import SystemManagePage from '@/pages/System/SystemManagePage'
+import ApplicationManagePage from '@/pages/System/ApplicationManagePage'
+
+// Protected Route wrapper
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isAuthenticated } = useAuth()
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />
+}
 
 function App() {
   return (
-    <div style={{ padding: 24 }}>
-      <h1>OSM 开源软件治理平台</h1>
-      <p>前端项目初始化成功</p>
-      <Button type="primary">测试按钮</Button>
-    </div>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <MainLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<DashboardPage />} />
+        <Route path="system/users" element={<UserManagePage />} />
+        <Route path="system/roles" element={<RoleManagePage />} />
+        <Route path="system/domains" element={<DomainManagePage />} />
+        <Route path="system/systems" element={<SystemManagePage />} />
+        <Route path="system/applications" element={<ApplicationManagePage />} />
+      </Route>
+    </Routes>
   )
 }
 
